@@ -1,0 +1,87 @@
+## Generated mta.yaml based on template version 0.2.0
+## appName = rideshare
+## language=nodejs; multiTenant=false
+## approuter=
+_schema-version: '3.1'
+ID: rideshare
+version: 1.0.0
+description: "A simple CAP project."
+parameters:
+  enable-parallel-deployments: true  
+build-parameters:
+  before-all:
+   - builder: custom
+     commands:
+      - npm install
+      - cds build\/all
+
+modules:
+ ##############    UI MODULE   ##########################
+ - name: rideshare-ui
+   type: nodejs
+   path: app
+   parameters:
+     memory: 256M
+     disk-quota: 256M
+   requires:
+     - name: uaa_app_router
+     - name: srv-binding
+       group: destinations
+       properties:
+         forwardAuthToken: true
+         strictSSL: false
+         name: srv-binding
+         url: ~{url}
+
+ # --------------------- SERVER MODULE ------------------------
+ - name: rideshare-srv
+ # ------------------------------------------------------------
+   type: nodejs
+   path: gen/srv
+   requires:
+    - name: rideshare-db-hdi-container
+    - name: rides-destination
+    - name: uaa_app_router
+   provides:
+    - name: srv-binding
+      properties:
+        url: ${default-url}  
+
+ # --------------------- DB MODULE ------------------------
+ - name: rideshare-db
+ # ------------------------------------------------------------
+   type: hdb
+   path: gen/db
+   requires: 
+    - name: rideshare-db-hdi-container
+
+resources:
+  # SAP HANA Service
+ - name: rideshare-db-hdi-container
+   type: org.cloudfoundry.managed-service
+   parameters:
+    service: hanatrial
+    service-plan: hdi-shared
+
+ - name: html5_repo_runtime
+   parameters:
+    service-plan: app-runtime
+    service: html5-apps-repo
+   type: org.cloudfoundry.managed-service
+
+ - name: uaa_app_router
+   parameters:
+     path: ./xs-security.json
+     service-plan: application
+     service: xsuaa
+   type: org.cloudfoundry.managed-service  
+
+ - name: rides-destination
+   parameters:
+     service-plan: lite
+     service: description 
+   type: org.cloudfoundry.existing-service
+
+
+
+

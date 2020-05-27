@@ -1,0 +1,94 @@
+{
+    "_version": "1.8.0",
+    "sap.app": {
+        "id": "drivers",
+        "type": "application",
+        "title": "Driver Details",
+        "description": "Sample Application",
+        "i18n": "i18n/i18n.properties",
+        "ach": "CA-UI5-FE",
+        "dataSources": {
+            "RideService": {
+                "uri": "/odata/ride/",
+                "type": "OData",
+                "settings": {
+                    "odataVersion": "4.0"
+                }
+            }
+        },
+        "sourceTemplate": {
+            "id": "ui5template.fiorielements.v4.lrop",
+            "version": "1.0.0"
+        }
+    },
+    "sap.ui5": {
+        "dependencies": {
+            "libs": {
+                "sap.fe": {}
+            }
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "uri": "i18n/i18n.properties"
+            },
+            "": {
+                "dataSource": "RideService",
+                "settings": {
+                    "synchronizationMode": "None",
+                    "operationMode": "Server",
+                    "autoExpandSelect": true,
+                    "earlyRequests": true,
+                    "groupProperties": {
+                        "default": {
+                            "submit": "Auto"
+                        }
+                    }
+                }
+            }
+        },
+        "routing": {
+            "routes": [
+                {
+                    "pattern": "",
+                    "name": "DriverList",
+                    "target": "DriverList"
+                },
+                {
+                    "pattern": "Drivers({key})",
+                    "name": "DriverDetails",
+                    "target": "DriverDetails"
+                }
+            ],
+            "targets": {
+                "DriverList": {
+                    "type": "Component",
+                    "id": "DriverList",
+                    "name": "sap.fe.templates.ListReport",
+                    "options": {
+                        "settings": {
+                            "entitySet": "Drivers",
+                            "navigation": {
+                                "Drivers": {
+                                    "detail": {
+                                        "route": "DriverDetails"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "DriverDetails": {
+                    "type": "Component",
+                    "id": "Drivertails",
+                    "name": "sap.fe.templates.ObjectPage",
+                    "options": {
+                        "settings": {
+                            "entitySet": "Drivers"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,46 @@
+{
+  "name": "rideshare",
+  "version": "1.0.0",
+  "description": "A simple CAP project.",
+  "repository": "<Add your repository here>",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@sap/cds": "^3",
+    "@sap/hana-client": "^2.4.196",
+    "axios": "^0.19.2",
+    "cfenv": "^1.2.2",
+    "express": "^4",
+    "request": "^2.88.2",
+    "uuid": "^8.0.0",
+    "uuid-parse": "^1.1.0"
+  },
+  "scripts": {
+    "start": "cds run",
+    "build:mta": "cds build/all && mbt build -p=cf"
+  },
+  "cds": {
+    "requires": {
+      "db": {
+        "[production]": {
+          "kind": "hana",
+          "model": [
+            "db/",
+            "srv/",
+            "app/",
+            "schema",
+            "services",
+            []
+          ]
+        },
+        "kind": "sql"
+      },
+      "API_QUALTRICS": {
+        "kind": "rest",
+        "credentials": {
+          "destination": "qualtrics"
+        }
+      }
+    }
+  }
+}

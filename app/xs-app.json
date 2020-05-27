@@ -1,0 +1,15 @@
+{
+    "welcomeFile": "rides-app/index.html",
+    "authenticationMethod": "none",
+    "routes": [
+    {
+        "source": "^/odata/(.*)$",
+        "target": "$1",
+        "destination": "srv-binding"
+    },        
+    {
+        "source": "^/(.*)$",
+        "localDir" : "./"
+    }  
+]
+}

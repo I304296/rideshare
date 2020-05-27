@@ -1,0 +1,11 @@
+###GET
+GET http://localhost:4004/ride/Rides
+
+###PATCH
+PATCH http://localhost:4004/ride/Rides/071506e7-7602-427d-b458-bbcf1061ebaf HTTP/1.1
+Content-Type: application/json;charset=UTF-8;IEEE754Compatible=true
+
+{
+    "amount": "20.55",
+    "rating": "2.1"
+}

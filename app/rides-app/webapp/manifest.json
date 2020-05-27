@@ -1,0 +1,113 @@
+{
+    "_version": "1.8.0",
+    "sap.app": {
+        "id": "rides",
+        "type": "application",
+        "title": "Ride Details",
+        "description": "Sample Application",
+        "i18n": "i18n/i18n.properties",
+        "dataSources": {
+            "RideService": {
+                "uri": "/odata/ride/",
+                "type": "OData",
+                "settings": {
+                    "odataVersion": "4.0"
+                }
+            }
+        }
+    },
+    "sap.ui5": {
+        "-extends": {
+            "extensions": {         
+                "sap.ui.controllerExtensions": {
+                    "sap.fe.templates.ListReport.ListReportController": {
+                    "controllerName": "rides-app.ext.controller.MyObjectPageExt",
+                    "-sap.ui.generic.app": {
+                        "Rides": {
+                            "EntitySet": "Rides",
+                            "Header" : {
+                                "Actions": {
+                                "LaunchSurvey": {
+                                    "id": "ID",
+                                    "text": "Complete Ride",
+                                    "press": "LaunchSurvey"
+                                    
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    }
+                }
+            }
+        },
+        "dependencies": {
+            "libs": {
+                "sap.fe": {}
+            }
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "uri": "i18n/i18n.properties"
+            },
+            "": {
+                "dataSource": "RideService",
+                "settings": {
+                    "synchronizationMode": "None",
+                    "operationMode": "Server",
+                    "autoExpandSelect": true,
+                    "earlyRequests": true,
+                    "groupProperties": {
+                        "default": {
+                            "submit": "Auto"
+                        }
+                    }
+                }
+            }
+        },
+        "routing": {
+            "routes": [{
+                    "pattern": "",
+                    "name": "RideList",
+                    "target": "RideList"
+                },
+                {
+                    "pattern": "Rides({key})",
+                    "name": "RideDetails",
+                    "target": "RideDetails"
+                }
+            ],
+            "targets": {
+                "RideList": {
+                    "type": "Component",
+                    "id": "RideList",
+                    "name": "sap.fe.templates.ListReport",
+                    "options": {
+                        "settings": {
+                            "entitySet": "Rides",
+                            "navigation": {
+                                "Rides": {
+                                    "detail": {
+                                        "route": "RideDetails"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "RideDetails": {
+                    "type": "Component",
+                    "id": "RideDetails",
+                    "name": "sap.fe.templates.ObjectPage",
+                    "options": {
+                        "settings": {
+                            "entitySet": "Rides"
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+}

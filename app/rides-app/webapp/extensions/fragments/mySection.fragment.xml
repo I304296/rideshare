@@ -1,0 +1,24 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:uxap="sap.uxap"
+	xmlns:core="sap.ui.core"
+	xmlns:u="sap.ui.unified"
+	xmlns:mvc="sap.ui.core.mvc">
+	<uxap:ObjectPageSection id="mySection" title="{i18n>extension-uploader-titel}">
+		<uxap:subSections>
+			<uxap:ObjectPageSubSection  id="ImageUploader">
+				<uxap:blocks>
+					<VBox id="lay">
+						<Label id="myUploadLabel" text="{i18n>extension-uploader-label}" />
+						<Button
+							id="myUploadBtn"
+							tooltip="Complete Ride"
+							enabled="true"
+							text="Complete Ride"
+							press=".extension.rides.extensions.controllerExtensions.myControllerExtension.handleCompletePress"/>
+					</VBox>
+				</uxap:blocks>
+			</uxap:ObjectPageSubSection>
+		</uxap:subSections>
+	</uxap:ObjectPageSection>
+</core:FragmentDefinition>
